@@ -1,7 +1,7 @@
-#ifndef RESONANCETYPE.H
-#define RESONANCETYPE.H
+#ifndef RESONANCETYPE_H
+#define RESONANCETYPE_H
 
-#include "ParticleType.h"
+#include "particleType.h"
 
 
 class ResonanceType : public ParticleType {
@@ -12,9 +12,9 @@ class ResonanceType : public ParticleType {
 
     double getWidth() const;
 
-    void Print() const {}
+    void Print() const;
 
-    ResonanceType(char* Name, double Mass, int Charge, double Width);
+    ResonanceType(const char* Name, const double Mass, const int Charge, const double Width);
     
 };
 

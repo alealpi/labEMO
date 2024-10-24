@@ -1,8 +1,9 @@
-#ifndef PARTICLE.H
-#define PARTICLE.H
+#ifndef PARTICLE_H
+#define PARTICLE_H
 
 #include <cmath>
-#include "ResonanceType.h"
+#include <cstdlib>
+#include "resonanceType.h"
 
 
 struct Momentum {
@@ -16,31 +17,50 @@ struct Momentum {
 class Particle {
 
     static const int fMaxNumParticleType = 10;
-    static ParticleType* fParticleType[fMaxNumParticleType];
+    static ParticleType* fParticleType[];
     static int fNParticleType;
     int fIndex;
     Momentum fP;
 
     static int FindParticle(char* ParticleName);
 
+    void Boost(double bx, double by, double bz);
+
 
     public:
 
     Particle(char* Name, double Px, double Py, double Pz);
 
+    Particle() {}
+
     int getIndex() const;
 
-    static void AddParticleType(char* name, double mass, int charge, double width);
+    static auto getParticleTypeArray() { return fParticleType; }
 
-    /*
+    static void AddParticleType(char* name, double mass, int charge, double width = 0.);
+
+    
+
+    //////////////////// CONTROLLARE ///////////////////////
+
     void setIndex(int i) {
-        if (i == ??)
-        fIndex = i;
+        if (i >= 0 && i <= fNParticleType - 1) {
+            fIndex = i;
+        } else {
+            std::cout << "Impossibile settare l'indice: tipo di particella non trovata" << '\n';
+        }
     }
 
-    void setIndex(char* name) {}
-    */
-    // COSA SIGNIFICA SET INDEX?
+    void setIndex(char* name) {
+        int i = FindParticle(name);
+        if (i == -1) {
+            std::cout << "Impossibile settare l'indice: tipo di particella non trovata" << '\n';
+        } else {
+            fIndex = i;
+        }
+    }
+    
+    ////////////////////////////////////////////////////////
 
 
 
@@ -57,6 +77,14 @@ class Particle {
     double getInvMass(Particle const& p2) const;
 
     void setP(double Px, double Py, double Pz);
+
+    int Decay2body(Particle &dau1,Particle &dau2) const;    
+
+
+
+
+
+
     
 };
 

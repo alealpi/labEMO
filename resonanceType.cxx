@@ -1,4 +1,4 @@
-#include "ResonanceType.h"
+#include "resonanceType.h"
 
 
 
@@ -11,4 +11,4 @@ void ResonanceType::Print() const {
 }
 
 
-ResonanceType::ResonanceType(char* Name, double Mass, int Charge, double Width) : ParticleType(Name, Mass, Charge), fWidth{Width} {} 
+ResonanceType::ResonanceType(const char* Name, const double Mass, const int Charge, const double Width) : ParticleType(Name, Mass, Charge), fWidth{Width} {} 
