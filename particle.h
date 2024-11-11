@@ -22,14 +22,14 @@ class Particle {
     int fIndex;
     Momentum fP;
 
-    static int FindParticle(char* ParticleName);
+    static int FindParticle(std::string const& ParticleName);
 
     void Boost(double bx, double by, double bz);
 
 
     public:
 
-    Particle(char* Name, double Px, double Py, double Pz);
+    Particle(std::string const& Name, double Px, double Py, double Pz);
 
     Particle() {}
 
@@ -37,7 +37,7 @@ class Particle {
 
     static auto getParticleTypeArray() { return fParticleType; }
 
-    static void AddParticleType(char* name, double mass, int charge, double width = 0.);
+    static void AddParticleType(std::string const& name, double mass, int charge, double width);
 
     
 
@@ -51,7 +51,7 @@ class Particle {
         }
     }
 
-    void setIndex(char* name) {
+    void setIndex(std::string const& name) {
         int i = FindParticle(name);
         if (i == -1) {
             std::cout << "Impossibile settare l'indice: tipo di particella non trovata" << '\n';

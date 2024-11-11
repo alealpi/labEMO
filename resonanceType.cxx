@@ -11,4 +11,4 @@ void ResonanceType::Print() const {
 }
 
 
-ResonanceType::ResonanceType(const char* Name, const double Mass, const int Charge, const double Width) : ParticleType(Name, Mass, Charge), fWidth{Width} {} 
+ResonanceType::ResonanceType(std::string const& Name, const double Mass, const int Charge, const double Width) : ParticleType(Name, Mass, Charge), fWidth{Width} {} 

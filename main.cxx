@@ -11,17 +11,21 @@
 
 
 
-int main() {
+void Main() {
+
+    R__LOAD_LIBRARY(particleType_cxx.so);
+    R__LOAD_LIBRARY(resonanceType_cxx.so);
+    R__LOAD_LIBRARY(particle_cxx.so);
 
     gBenchmark->Start("Benchmark");
 
 
-    Particle::AddParticleType("pione+", 0.13957, +1);
-    Particle::AddParticleType("pione-", 0.13957, -1);
-    Particle::AddParticleType("kaone+", 0.49367, +1);
-    Particle::AddParticleType("kaone-", 0.49367, -1);
-    Particle::AddParticleType("protone+", 0.93827, +1);
-    Particle::AddParticleType("protone-", 0.93827, -1);
+    Particle::AddParticleType("pione+", 0.13957, +1, 0.);
+    Particle::AddParticleType("pione-", 0.13957, -1, 0.);
+    Particle::AddParticleType("kaone+", 0.49367, +1, 0.);
+    Particle::AddParticleType("kaone-", 0.49367, -1, 0.);
+    Particle::AddParticleType("protone+", 0.93827, +1, 0.);
+    Particle::AddParticleType("protone-", 0.93827, -1, 0.);
     Particle::AddParticleType("K0", 0.89166, 0, 0.050);
 
     gRandom->SetSeed();

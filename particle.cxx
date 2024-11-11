@@ -5,11 +5,11 @@ ParticleType* Particle::fParticleType[Particle::fMaxNumParticleType];
 int Particle::fNParticleType = 0;
 
 
-int Particle::FindParticle(char* ParticleName) {
+int Particle::FindParticle(std::string const& ParticleName) {
     int i = 0;
     for (; i < fMaxNumParticleType; ++i)
     {
-        if (fParticleType[i]->getName() == ParticleName)
+        if (fParticleType[i] != nullptr && fParticleType[i]->getName() == ParticleName)
         {
             return i;
         }
@@ -17,7 +17,7 @@ int Particle::FindParticle(char* ParticleName) {
     return -1;
 }
 
-Particle::Particle(char *Name, double Px = 0., double Py = 0., double Pz = 0.) {
+Particle::Particle(std::string const& Name, double Px = 0., double Py = 0., double Pz = 0.) {
     fP.x = Px;
     fP.y = Py;
     fP.z = Pz;
@@ -33,7 +33,7 @@ Particle::Particle(char *Name, double Px = 0., double Py = 0., double Pz = 0.) {
 int Particle::getIndex() const { return fIndex; }
 
 
-void Particle::AddParticleType(char* name, double mass, int charge, double width = 0.) {
+void Particle::AddParticleType(std::string const& name, double mass, int charge, double width) {
 
     if (fNParticleType >= fMaxNumParticleType) {
         std::cout << "Massimo numero di tipi di particelle raggiunto" << '\n';
@@ -49,7 +49,7 @@ void Particle::AddParticleType(char* name, double mass, int charge, double width
             fParticleType[fNParticleType] = new ResonanceType(name, mass, charge, width);   // controllare posizione [...]
             // stessa cosa di sopra
         }
-        // ++fNParticleType;
+        ++fNParticleType;
     }
 }
 

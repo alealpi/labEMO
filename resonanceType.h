@@ -14,7 +14,7 @@ class ResonanceType : public ParticleType {
 
     void Print() const;
 
-    ResonanceType(const char* Name, const double Mass, const int Charge, const double Width);
+    ResonanceType(std::string const& Name, const double Mass, const int Charge, const double Width);
     
 };
 
