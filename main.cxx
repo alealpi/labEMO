@@ -36,26 +36,26 @@ void Main() {
 
 
     TH1I* particleType_h = new TH1I("particleType_h", "Particle types distribution", 7, 0, 7);
-    TH1F* azimutAngle_h = new TH1F("azimutAngle_h", "Azimut angle distribution", 100, 0., 2* TMath::Pi());
-    TH1F* polarAngle_h = new TH1F("polarAngle_h", "Polar angle distribution", 50, 0., TMath::Pi());
-    TH1F* momentum_h = new TH1F("momentum_h", "Momentum distribution", 100, 0., 5.);
-    TH1F* transverseMomentum_h = new TH1F("transverseMomentum_h", "Transverse momentum distribution", 100, 0., 5.);
-    TH1F* energy_h = new TH1F("energy_h", "Energy distribution", 100, 0., 5.);
-    TH1F* invMassAll_h = new TH1F("invMassAll_h", "Inv. mass for all particles", 100, 0., 5.);
+    TH1F* azimutAngle_h = new TH1F("azimutAngle_h", "Azimut angle distribution", 300, 0., 2* TMath::Pi());
+    TH1F* polarAngle_h = new TH1F("polarAngle_h", "Polar angle distribution", 150, 0., TMath::Pi());
+    TH1F* momentum_h = new TH1F("momentum_h", "Momentum distribution", 200, 0., 10.);
+    TH1F* transverseMomentum_h = new TH1F("transverseMomentum_h", "Transverse momentum distribution", 200, 0., 10.);
+    TH1F* energy_h = new TH1F("energy_h", "Energy distribution", 200, 0., 5.);
+    TH1F* invMassAll_h = new TH1F("invMassAll_h", "Inv. mass for all particles", 600, 0., 5.);
     invMassAll_h->Sumw2();
-    TH1F* invMassSameCharge_h = new TH1F("invMassSameCharge_h", "Inv. mass for particles with same charge", 100, 0., 5.);
+    TH1F* invMassSameCharge_h = new TH1F("invMassSameCharge_h", "Inv. mass for particles with same charge", 7000, 0., 5.);
     invMassSameCharge_h->Sumw2();
-    TH1F* invMassOppositeCharge_h = new TH1F("invMassOppositeCharge_h", "Inv. mass for particles with opposite charge", 100, 0., 5.);
+    TH1F* invMassOppositeCharge_h = new TH1F("invMassOppositeCharge_h", "Inv. mass for particles with opposite charge", 7000, 0., 5.);
     invMassOppositeCharge_h->Sumw2();
-    TH1F* invMassPionKaonSameCharge_h = new TH1F("invMassPionKaonSameCharge_h", "Inv. mass for pions and kaons with same charge", 100, 0., 5.);
+    TH1F* invMassPionKaonSameCharge_h = new TH1F("invMassPionKaonSameCharge_h", "Inv. mass for pions and kaons with same charge", 7000, 0., 5.);
     invMassPionKaonSameCharge_h->Sumw2();
-    TH1F* invMassPionKaonOppositeCharge_h = new TH1F("invMassPionKaonOppositeCharge_h", "Inv. mass for pions and kaons with opposite charge", 100, 0., 5.);
+    TH1F* invMassPionKaonOppositeCharge_h = new TH1F("invMassPionKaonOppositeCharge_h", "Inv. mass for pions and kaons with opposite charge", 7000, 0., 5.);
     invMassPionKaonOppositeCharge_h->Sumw2();
-    TH1F* invMassDecayed_h = new TH1F("invMassDecayed_h", "Inv. mass for particles decayed from K0", 50, 0.5, 1.5);
+    TH1F* invMassDecayed_h = new TH1F("invMassDecayed_h", "Inv. mass for particles decayed from K0", 7000, 0., 2.);
     invMassDecayed_h->Sumw2();
 
-
-
+    
+    
 
     for (int i = 1; i <= 1E5; ++i) {
 
@@ -102,7 +102,8 @@ void Main() {
                 EventParticles[100 + NK0 * 2] = decayProduct1;
                 EventParticles[100 + NK0 * 2 + 1] = decayProduct2;
 
-
+                double invMassDecayed = (EventParticles[100 + NK0 * 2]).getInvMass(EventParticles[100 + NK0 * 2 + 1]);
+                invMassDecayed_h->Fill(invMassDecayed);    
 
                 ++NK0;
             }
@@ -115,64 +116,78 @@ void Main() {
             momentum_h->Fill(P);
             transverseMomentum_h->Fill(std::sqrt(p.getMomentum().x * p.getMomentum().x + p.getMomentum().y * p.getMomentum().y));
             energy_h->Fill(p.getEnergy());
+        
+
         }
 
 
+        for (int k = 0; k < 100 + 2 * NK0 - 1; ++k) {
 
-
-        for (int k = 0; k < 100 + 2 * NK0; ++k) {
-
-            Particle p1 = EventParticles[k];
-            ParticleType* p1_properties = p1.getParticleTypeArray()[p1.getIndex()];
-
-            if (p1_properties->getName() != "K0") {
-
+            for (int l = k + 1; l < 100 + 2 * NK0; ++l) {
+                
+                Particle p1 = EventParticles[k];
+                ParticleType* p1_properties = p1.getParticleTypeArray()[p1.getIndex()];
                 double q1 = p1_properties->getCharge();
-            
-                for (int l = k + 1; l < 100 + 2 * NK0; ++l) {
-                    Particle p2 = EventParticles[l];
-                    ParticleType* p2_properties = p2.getParticleTypeArray()[p2.getIndex()];
-                    
-                    double q2 = p2_properties->getCharge();
+
+                Particle p2 = EventParticles[l];
+                ParticleType* p2_properties = p2.getParticleTypeArray()[p2.getIndex()];
+                double q2 = p2_properties->getCharge();
+
+
+                if (p1_properties->getName() != "K0" && p2_properties->getName() != "K0") {
 
                     double invMass = p1.getInvMass(p2);
                     invMassAll_h->Fill(invMass);
 
-                    if (q1 * q2 > 0) {
+                    if (q1 == q2) {
                         invMassSameCharge_h->Fill(invMass);
-
-                        if ((p1_properties->getName() == "pione+" && p2_properties->getName() == "kaone+") || 
+                    }
+                        /*if ((p1_properties->getName() == "pione+" && p2_properties->getName() == "kaone+") || 
                             (p1_properties->getName() == "pione-" && p2_properties->getName() == "kaone-") || 
                             (p1_properties->getName() == "kaone+" && p2_properties->getName() == "pione+") || 
                             (p1_properties->getName() == "kaone-" && p2_properties->getName() == "pione-")) 
                         {
                             invMassPionKaonSameCharge_h->Fill(invMass);
-                        }
+                        }*/
 
 
-                    } else if (q1 * q2 < 0) {
+                    if (q1 != q2) {
                         invMassOppositeCharge_h->Fill(invMass);
 
-                        if ((p1_properties->getName() == "pione+" && p2_properties->getName() == "kaone-") || 
+                        /*if ((p1_properties->getName() == "pione+" && p2_properties->getName() == "kaone-") || 
                             (p1_properties->getName() == "pione-" && p2_properties->getName() == "kaone+") || 
                             (p1_properties->getName() == "kaone+" && p2_properties->getName() == "pione-") || 
                             (p1_properties->getName() == "kaone-" && p2_properties->getName() == "pione+")) 
                         {
                             invMassPionKaonOppositeCharge_h->Fill(invMass);
-                        }
+                        }*/
+                    }
+
+                    if ((p1_properties->getName() == "pione+" && p2_properties->getName() == "kaone-") || 
+                        (p1_properties->getName() == "pione-" && p2_properties->getName() == "kaone+")) 
+                    {
+                        invMassPionKaonOppositeCharge_h->Fill(invMass);
                     }
 
 
-    
-                }
+                    if ((p1_properties->getName() == "pione+" && p2_properties->getName() == "kaone+") || 
+                        (p1_properties->getName() == "pione-" && p2_properties->getName() == "kaone-")) 
+                    {
+                        invMassPionKaonSameCharge_h->Fill(invMass);
+                    }
 
+
+
+                }
             }
 
+            
 
+            
         }
 
-        if (NK0 != 0) {
-            for (int k = 100; k < 100 + 2 * NK0; ++k, ++k) {
+        /*if (NK0 != 0) {
+            for (int k = 100; k < 100 + 2 * NK0; k = k + 2) {
                 Particle p1 = EventParticles[k];
                 Particle p2 = EventParticles[k + 1];
 
@@ -181,7 +196,7 @@ void Main() {
             }
 
 
-        }
+        }*/
 
 
 
@@ -189,7 +204,7 @@ void Main() {
     }
 
 
-    TFile* file = new TFile("results_file", "RECREATE");
+    TFile* file = new TFile("results.root", "RECREATE");
 
     particleType_h->Write();
     azimutAngle_h->Write();

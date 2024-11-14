@@ -14,5 +14,5 @@ main_cxx_ACLiC_dict_rdict.pcm
 analysis_cxx.d
 analysis_cxx.so
 analysis_cxx_ACLiC_dict_rdict.pcm
-results_file
 compile.C
+results.root
