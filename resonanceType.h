@@ -3,22 +3,16 @@
 
 #include "particleType.h"
 
-
-class ResonanceType : public ParticleType {
-
+class ResonanceType : public ParticleType
+{
     const double fWidth;
 
-    public:
+public:
+    ResonanceType(std::string const &Name, const double Mass, const int Charge, const double Width);
 
     double getWidth() const;
 
     void Print() const;
-
-    ResonanceType(std::string const& Name, const double Mass, const int Charge, const double Width);
-    
 };
-
-
-
 
 #endif

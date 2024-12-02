@@ -8,9 +8,9 @@ particle_cxx.d
 particle_cxx.so
 particle_cxx_ACLiC_dict_rdict.pcm
 .vscode/settings.json
-main_cxx.d
-main_cxx.so
-main_cxx_ACLiC_dict_rdict.pcm
+generate_cxx.d
+generate_cxx.so
+generate_cxx_ACLiC_dict_rdict.pcm
 analysis_cxx.d
 analysis_cxx.so
 analysis_cxx_ACLiC_dict_rdict.pcm
