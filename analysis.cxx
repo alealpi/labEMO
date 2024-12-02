@@ -80,8 +80,6 @@ void analyse()
     std::cout << "Parameter 0: " << azimutalFit->GetParameter(0) << " +/- " << azimutalFit->GetParError(0) << '\n';
     std::cout << "Chi square / NDF: " << azimutalFit->GetChisquare() / azimutalFit->GetNDF() << '\n';
     std::cout << "Probability of the fit: " << azimutalFit->GetProb() << '\n';
-    std::cout << "Chi square: " << azimutalFit->GetChisquare() << '\n';
-    std::cout << "DOF: " << azimutalFit->GetNDF() << '\n';
 
     // POLAR ANGLE DISTRIBUTION
     particles_canva->cd(3);
@@ -103,8 +101,6 @@ void analyse()
     std::cout << "Parameter 0: " << polarFit->GetParameter(0) << " +/- " << polarFit->GetParError(0) << '\n';
     std::cout << "Chi square / NDF: " << polarFit->GetChisquare() / polarFit->GetNDF() << '\n';
     std::cout << "Probability of the fit: " << polarFit->GetProb() << '\n';
-    std::cout << "Chi square: " << polarFit->GetChisquare() << '\n';
-    std::cout << "DOF: " << polarFit->GetNDF() << '\n';
 
     // MOMENTUM DISTRIBUTION
     particles_canva->cd(4);
@@ -113,7 +109,7 @@ void analyse()
     momentumFit->SetParName(0, "Parameter 0");
     momentumFit->SetParName(1, "Mean");
     // FITTING
-    momentumFit->SetParameter(0, 9e4);
+    momentumFit->SetParameter(0, 5e5);
     momentumFit->SetParameter(1, 1.);
     momentum_h->Fit(momentumFit, "QR");
     // DRAWING
@@ -130,12 +126,10 @@ void analyse()
     std::cout << "Parameter 1: " << momentumFit->GetParameter(1) << " +/- " << momentumFit->GetParError(1) << '\n';
     std::cout << "Chi square / NDF: " << momentumFit->GetChisquare() / momentumFit->GetNDF() << '\n';
     std::cout << "Probability of the fit: " << momentumFit->GetProb() << '\n';
-    std::cout << "Chi square: " << momentumFit->GetChisquare() << '\n';
-    std::cout << "DOF: " << momentumFit->GetNDF() << '\n';
 
-    ///////////////////////////////////////////////////////////////////
-    ///////////////// INVARIANT MASS HISTOGRAMS ///////////////////////
-    ///////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+    ////////////// INVARIANT MASS HISTOGRAMS ////////////////////
+    /////////////////////////////////////////////////////////////
 
     // creating second canva, with invariant mass distributions
     TCanvas *invMass_canva = new TCanvas("invMass_canva", "Invariant mass distributions");
@@ -153,10 +147,10 @@ void analyse()
     invMassAllFit->SetParName(1, "Mean");
     invMassAllFit->SetParName(2, "Sigma");
     // FITTING
-    invMassAllFit->SetParameters(850, 0.8919, 0.04989);
+    invMassAllFit->SetParameters(4000, 0.89166, 0.05);
     invMassSubtractionAll_h->Fit(invMassAllFit, "QR");
     // DRAWING
-    gStyle->SetOptStat(11);
+    gStyle->SetOptStat(10);
     gStyle->SetOptFit(1111);
     invMassSubtractionAll_h->SetXTitle("Invariant mass (GeV)");
     invMassSubtractionAll_h->SetYTitle("Occurrences");
@@ -183,10 +177,10 @@ void analyse()
     invMassPionKaonFit->SetParName(1, "Mean");
     invMassPionKaonFit->SetParName(2, "Sigma");
     // FITTING
-    invMassPionKaonFit->SetParameters(800, 0.8919, 0.04989);
+    invMassPionKaonFit->SetParameters(4000, 0.89166, 0.05);
     invMassSubtractionPionKaon_h->Fit(invMassPionKaonFit, "QR");
     // DRAWING
-    gStyle->SetOptStat(11);
+    gStyle->SetOptStat(10);
     gStyle->SetOptFit(1111);
     invMassSubtractionPionKaon_h->SetXTitle("Invariant mass (GeV)");
     invMassSubtractionPionKaon_h->SetYTitle("Occurrences");
@@ -209,10 +203,10 @@ void analyse()
     invMassDecayedFit->SetParName(1, "Mean");
     invMassDecayedFit->SetParName(2, "Sigma");
     // FITTING
-    invMassDecayedFit->SetParameters(500, 0.89, 0.05);
+    invMassDecayedFit->SetParameters(2000, 0.89166, 0.05);
     invMassDecayed_h->Fit(invMassDecayedFit, "QR");
     // DRAWING
-    gStyle->SetOptStat(11);
+    gStyle->SetOptStat(10);
     gStyle->SetOptFit(1111);
     invMassDecayed_h->SetXTitle("Invariant mass (GeV)");
     invMassDecayed_h->SetYTitle("Occurrences");
